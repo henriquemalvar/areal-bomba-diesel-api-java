@@ -35,4 +35,8 @@ public class UsuarioMapper {
         }
         return usuarioDTO;
     }
+
+    public UsuarioDTO toDTO(Usuario usuario) {
+        return modelMapper.map(usuario, UsuarioDTO.class);
+    }
 }

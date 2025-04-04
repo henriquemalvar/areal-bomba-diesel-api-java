@@ -29,6 +29,6 @@ public class UsuarioService {
 
         Usuario usuario = usuarioMapper.toUsuario(novoUsuarioDTO);
         usuario = usuarioRepository.save(usuario);
-        return usuarioMapper.toUsuarioDTO(usuario);
+        return usuarioMapper.toDTO(usuario);
     }
 }
