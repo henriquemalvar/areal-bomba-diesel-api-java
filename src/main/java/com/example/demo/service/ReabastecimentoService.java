@@ -1,5 +1,10 @@
 package com.example.demo.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +22,21 @@ public class ReabastecimentoService {
     @Transactional
     public Reabastecimento create(Reabastecimento reabastecimento) {
         return reabastecimentoRepository.save(reabastecimento);
+    }
+
+    public List<Reabastecimento> findAll(LocalDate dataInicio, LocalDate dataFim, Long maquinarioId) {
+        if (dataInicio != null && dataFim != null && maquinarioId != null) {
+            LocalDateTime inicio = dataInicio.atStartOfDay();
+            LocalDateTime fim = dataFim.atTime(LocalTime.MAX);
+            return reabastecimentoRepository.findByDataBetweenAndMaquinarioId(inicio, fim, maquinarioId);
+        } else if (dataInicio != null && dataFim != null) {
+            LocalDateTime inicio = dataInicio.atStartOfDay();
+            LocalDateTime fim = dataFim.atTime(LocalTime.MAX);
+            return reabastecimentoRepository.findByDataBetween(inicio, fim);
+        } else if (maquinarioId != null) {
+            return reabastecimentoRepository.findByMaquinarioId(maquinarioId);
+        }
+        return reabastecimentoRepository.findAll();
     }
 
     public Reabastecimento findById(Long id) {
@@ -37,6 +57,9 @@ public class ReabastecimentoService {
 
     @Transactional
     public void delete(Long id) {
+        if (!reabastecimentoRepository.existsById(id)) {
+            throw new RuntimeException("Reabastecimento não encontrado");
+        }
         reabastecimentoRepository.deleteById(id);
     }
 }
