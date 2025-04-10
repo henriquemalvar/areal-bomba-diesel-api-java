@@ -9,7 +9,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -100,18 +102,19 @@ class ReabastecimentoServiceTest {
 
     @Test
     void findAll_DeveRetornarReabastecimentosPorPeriodo() {
-        LocalDateTime dataInicio = LocalDateTime.now().minusDays(7);
-        LocalDateTime dataFim = LocalDateTime.now();
-        List<Reabastecimento> reabastecimentos = Arrays.asList(reabastecimento);
-        when(reabastecimentoRepository.findByDataBetween(dataInicio.toLocalDate(), dataFim.toLocalDate()))
-                .thenReturn(reabastecimentos);
+        LocalDate dataInicio = LocalDate.now().minusDays(7);
+        LocalDate dataFim = LocalDate.now();
+        LocalDateTime inicio = dataInicio.atStartOfDay();
+        LocalDateTime fim = dataFim.atTime(LocalTime.MAX);
 
-        List<Reabastecimento> resultado = reabastecimentoService.findAll(dataInicio.toLocalDate(),
-                dataFim.toLocalDate(), null);
+        List<Reabastecimento> reabastecimentos = Arrays.asList(reabastecimento);
+        when(reabastecimentoRepository.findByDataBetween(inicio, fim)).thenReturn(reabastecimentos);
+
+        List<Reabastecimento> resultado = reabastecimentoService.findAll(dataInicio, dataFim, null);
 
         assertNotNull(resultado);
         assertEquals(1, resultado.size());
-        verify(reabastecimentoRepository, times(1)).findByDataBetween(dataInicio.toLocalDate(), dataFim.toLocalDate());
+        verify(reabastecimentoRepository, times(1)).findByDataBetween(inicio, fim);
     }
 
     @Test
@@ -129,21 +132,21 @@ class ReabastecimentoServiceTest {
 
     @Test
     void findAll_DeveRetornarReabastecimentosPorPeriodoEMaquinario() {
-        LocalDateTime dataInicio = LocalDateTime.now().minusDays(7);
-        LocalDateTime dataFim = LocalDateTime.now();
+        LocalDate dataInicio = LocalDate.now().minusDays(7);
+        LocalDate dataFim = LocalDate.now();
+        LocalDateTime inicio = dataInicio.atStartOfDay();
+        LocalDateTime fim = dataFim.atTime(LocalTime.MAX);
         Long maquinarioId = 1L;
+
         List<Reabastecimento> reabastecimentos = Arrays.asList(reabastecimento);
-        when(reabastecimentoRepository.findByDataBetweenAndMaquinarioId(dataInicio.toLocalDate(), dataFim.toLocalDate(),
-                maquinarioId))
+        when(reabastecimentoRepository.findByDataBetweenAndMaquinarioId(inicio, fim, maquinarioId))
                 .thenReturn(reabastecimentos);
 
-        List<Reabastecimento> resultado = reabastecimentoService.findAll(dataInicio.toLocalDate(),
-                dataFim.toLocalDate(), maquinarioId);
+        List<Reabastecimento> resultado = reabastecimentoService.findAll(dataInicio, dataFim, maquinarioId);
 
         assertNotNull(resultado);
         assertEquals(1, resultado.size());
-        verify(reabastecimentoRepository, times(1)).findByDataBetweenAndMaquinarioId(dataInicio.toLocalDate(),
-                dataFim.toLocalDate(), maquinarioId);
+        verify(reabastecimentoRepository, times(1)).findByDataBetweenAndMaquinarioId(inicio, fim, maquinarioId);
     }
 
     @Test

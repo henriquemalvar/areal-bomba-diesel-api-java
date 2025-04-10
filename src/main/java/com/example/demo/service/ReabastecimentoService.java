@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -24,9 +26,13 @@ public class ReabastecimentoService {
 
     public List<Reabastecimento> findAll(LocalDate dataInicio, LocalDate dataFim, Long maquinarioId) {
         if (dataInicio != null && dataFim != null && maquinarioId != null) {
-            return reabastecimentoRepository.findByDataBetweenAndMaquinarioId(dataInicio, dataFim, maquinarioId);
+            LocalDateTime inicio = dataInicio.atStartOfDay();
+            LocalDateTime fim = dataFim.atTime(LocalTime.MAX);
+            return reabastecimentoRepository.findByDataBetweenAndMaquinarioId(inicio, fim, maquinarioId);
         } else if (dataInicio != null && dataFim != null) {
-            return reabastecimentoRepository.findByDataBetween(dataInicio, dataFim);
+            LocalDateTime inicio = dataInicio.atStartOfDay();
+            LocalDateTime fim = dataFim.atTime(LocalTime.MAX);
+            return reabastecimentoRepository.findByDataBetween(inicio, fim);
         } else if (maquinarioId != null) {
             return reabastecimentoRepository.findByMaquinarioId(maquinarioId);
         }
