@@ -6,21 +6,13 @@ INSERT INTO funcao (nome, descricao) VALUES
 INSERT INTO funcao (nome, descricao) VALUES
 ('GERENTE', 'Gerente do posto');
 
--- Inserção de Pessoas
-INSERT INTO pessoa (nome, cpf, telefone, email) VALUES
-('João Silva', '123.456.789-00', '(11) 99999-9999', 'joao.silva@email.com');
-INSERT INTO pessoa (nome, cpf, telefone, email) VALUES
-('Maria Santos', '987.654.321-00', '(11) 88888-8888', 'maria.santos@email.com');
-INSERT INTO pessoa (nome, cpf, telefone, email) VALUES
-('Pedro Oliveira', '456.789.123-00', '(11) 77777-7777', 'pedro.oliveira@email.com');
-
 -- Inserção de Usuários
-INSERT INTO usuario (login, senha, pessoa_id, funcao_id) VALUES
-('joao.silva', '$2a$10$X7UrE2JvP3QZqX5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X', 1, 1);
-INSERT INTO usuario (login, senha, pessoa_id, funcao_id) VALUES
-('maria.santos', '$2a$10$X7UrE2JvP3QZqX5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X', 2, 2);
-INSERT INTO usuario (login, senha, pessoa_id, funcao_id) VALUES
-('pedro.oliveira', '$2a$10$X7UrE2JvP3QZqX5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X', 3, 3);
+INSERT INTO usuario (nome, cpf, email, senha, telefone, funcao_id) VALUES
+('João Silva', '123.456.789-00', 'joao.silva@email.com', '$2a$10$X7UrE2JvP3QZqX5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X', '(11) 99999-9999', 1);
+INSERT INTO usuario (nome, cpf, email, senha, telefone, funcao_id) VALUES
+('Maria Santos', '987.654.321-00', 'maria.santos@email.com', '$2a$10$X7UrE2JvP3QZqX5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X', '(11) 88888-8888', 2);
+INSERT INTO usuario (nome, cpf, email, senha, telefone, funcao_id) VALUES
+('Pedro Oliveira', '456.789.123-00', 'pedro.oliveira@email.com', '$2a$10$X7UrE2JvP3QZqX5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X5X', '(11) 77777-7777', 3);
 
 -- Inserção de Endereços de Usuários
 INSERT INTO endereco_usuario (rua, numero, complemento, bairro, cidade, estado, cep, usuario_id) VALUES

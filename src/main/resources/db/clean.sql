@@ -11,7 +11,6 @@ DELETE FROM fornecedor;
 DELETE FROM endereco_usuario;
 DELETE FROM usuario;
 DELETE FROM funcao;
-DELETE FROM pessoa;
 
 -- Reativa verificação de chaves estrangeiras
 SET FOREIGN_KEY_CHECKS = 1; 
